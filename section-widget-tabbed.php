@@ -80,12 +80,18 @@ class OLT_Tabbed_Section_Widget extends WP_Widget {
                echo $after_title;
             }
             #echo '<div class="swt-outter"><div class="swt-wrapper">';
-            echo apply_filters('widget_text', $html);    
+            echo apply_filters('widget_text', $html);
+            
       ?>
+      
 <script>
 jQuery(function () { jQuery('#<?php echo $widget_id; ?> a').click(function (e) {
-e.preventDefault(); jQuery(this).tab('show');
-}) jQuery('#<?php echo $widget_id; ?> a:first').tab('show'); })
+e.preventDefault();
+jQuery(this).tab('show');
+})  
+  
+    jQuery('#<?php echo $widget_id; ?> a:first').tab('show');
+  })
 </script> 
    
          
