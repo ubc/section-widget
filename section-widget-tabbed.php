@@ -53,14 +53,30 @@ class OLT_Tabbed_Section_Widget extends WP_Widget {
             $list = '';
             $content = '';
             
+            if (current_theme_supports('tabs', 'twitter-bootstrap' ) ) {
+            foreach($instance['tabs'] as $id => $tab) {
+           		$list .= "<li><a href=\"#{$widget_id}-tab-{$id}\">{$tab['title']}</a></li>";
+				$content .= "<div class=\"tab-pane\" id=\"{$widget_id}-tab-{$id}\">".do_shortcode($tab['body']).'</div>';
+            }
+            } else {
             foreach($instance['tabs'] as $id => $tab) {
                 $list .= "<li><a href=\"#{$widget_id}-tab-{$id}\">{$tab['title']}</a></li>";
                 $content .= "<div id=\"{$widget_id}-tab-{$id}\">".do_shortcode($tab['body']).'</div>';
             }
-            
+            }
             $heightFixClass = ($heightfix)? ' class="swt-height-fix"' : '';
+            if (current_theme_supports('tabs', 'twitter-bootstrap' ) ) {            
+            $html = '<ul class="nav nav-tabs" id="'.$widget_id.'">';
+            $html .= $list;
+            $html .= '</ul>';
+            $html .= "<div class='tab-content'>";
+            $html .= $content;
+            $html .= "</div>";
+            } else {
+
+	        $html = "<ul{$heightFixClass}>".$list.'</ul>'.$content;
             
-            $html = "<ul{$heightFixClass}>".$list.'</ul>'.$content;
+            }
             
             echo $before_widget;
             
@@ -69,9 +85,24 @@ class OLT_Tabbed_Section_Widget extends WP_Widget {
                 echo apply_filters('widget_title', $instance['title']);
                 echo $after_title;
             }
+            
+            if (current_theme_supports('tabs', 'twitter-bootstrap' ) ) {
+            
+            echo apply_filters('widget_text', $html);
+            ?>
+            <script>
+			jQuery(function () { jQuery('#<?php echo $widget_id; ?> a').click(function (e) { e.preventDefault();
+			jQuery(this).tab('show'); }) 
+			jQuery('#<?php echo $widget_id; ?> a:first').tab('show'); })
+			</script> 
+            <?php
+            } else {        
             echo '<div class="swt-outter"><div class="swt-wrapper">';
             echo apply_filters('widget_text', $html);
             echo '</div></div>';
+            }
+            
+            
             echo $after_widget;
         }
     }
