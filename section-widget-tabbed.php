@@ -52,8 +52,9 @@ class OLT_Tabbed_Section_Widget extends WP_Widget {
             
             $list = '';
             $content = '';
-            
-            if (current_theme_supports('tabs', 'twitter-bootstrap' ) ) {
+            $current_tabs_theme_support = get_theme_support('tabs')[0];
+            #var_dump(get_theme_support('tabs')[0]);
+            if ( $current_tabs_theme_support = 'twitter-bootstrap' ) {
             foreach($instance['tabs'] as $id => $tab) {
            		$list .= "<li><a href=\"#{$widget_id}-tab-{$id}\">{$tab['title']}</a></li>";
 				$content .= "<div class=\"tab-pane\" id=\"{$widget_id}-tab-{$id}\">".do_shortcode($tab['body']).'</div>';
@@ -65,7 +66,7 @@ class OLT_Tabbed_Section_Widget extends WP_Widget {
             }
             }
             $heightFixClass = ($heightfix)? ' class="swt-height-fix"' : '';
-            if (current_theme_supports('tabs', 'twitter-bootstrap' ) ) {            
+            if ( $current_tabs_theme_support = 'twitter-bootstrap' ) {            
             $html = '<ul class="nav nav-tabs" id="'.$widget_id.'">';
             $html .= $list;
             $html .= '</ul>';
@@ -86,7 +87,7 @@ class OLT_Tabbed_Section_Widget extends WP_Widget {
                 echo $after_title;
             }
             
-            if (current_theme_supports('tabs', 'twitter-bootstrap' ) ) {
+            if ( $current_tabs_theme_support = 'twitter-bootstrap' ) {
             
             echo apply_filters('widget_text', $html);
             ?>
