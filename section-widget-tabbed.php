@@ -54,24 +54,47 @@ class OLT_Tabbed_Section_Widget extends WP_Widget {
             $content = '';
             
             foreach($instance['tabs'] as $id => $tab) {
-                $list .= "<li><a href=\"#{$widget_id}-tab-{$id}\">{$tab['title']}</a></li>";
-                $content .= "<div id=\"{$widget_id}-tab-{$id}\">".do_shortcode($tab['body']).'</div>';
+               $list .= "<li><a href=\"#{$widget_id}-tab-{$id}\">{$tab['title']}</a></li>";
+               
+               $content .= "<div class=\"tab-pane\" id=\"{$widget_id}-tab-{$id}\">".do_shortcode($tab['body']).'</div>';
+       
+               
+               #$content .= "<div id=\"{$widget_id}-tab-{$id}\">".do_shortcode($tab['body']).'</div>';
             }
             
             $heightFixClass = ($heightfix)? ' class="swt-height-fix"' : '';
             
-            $html = "<ul{$heightFixClass}>".$list.'</ul>'.$content;
+            #$html = "<ul class='nav nav-tabs' id="{$widget_id}">'".$list.'</ul>'.$content;
             
+            $html = '<ul class="nav nav-tabs" id="'.$widget_id.'">';
+            $html .= $list;
+            $html .= '</ul>';
+            $html .= "<div class='tab-content'>";
+            $html .= $content;
+            $html .= "</div>";
             echo $before_widget;
             
             if($instance['display-title']){
-                echo $before_title;
-                echo apply_filters('widget_title', $instance['title']);
-                echo $after_title;
+               echo $before_title;
+               echo apply_filters('widget_title', $instance['title']);
+               echo $after_title;
             }
-            echo '<div class="swt-outter"><div class="swt-wrapper">';
-            echo apply_filters('widget_text', $html);
-            echo '</div></div>';
+            #echo '<div class="swt-outter"><div class="swt-wrapper">';
+            echo apply_filters('widget_text', $html);    
+      ?>
+<script>
+jQuery(function () { jQuery('#<?php echo $widget_id; ?> a').click(function (e) {
+e.preventDefault(); jQuery(this).tab('show');
+}) jQuery('#<?php echo $widget_id; ?> a:first').tab('show'); })
+</script> 
+   
+         
+      <?php      
+            
+            
+            #echo '</div></div>';
+
+            
             echo $after_widget;
         }
     }
