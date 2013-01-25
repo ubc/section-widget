@@ -54,7 +54,11 @@ class OLT_Tabbed_Section_Widget extends WP_Widget {
             $content = '';
             
             foreach($instance['tabs'] as $id => $tab) {
-               $list .= "<li><a href=\"#{$widget_id}-tab-{$id}\">{$tab['title']}</a></li>";
+            
+            if (current_theme_supports('tabs', 'twitter-bootstrap' ) ) {
+            	#echo "tabs!!!!!";
+            }	
+            	$list .= "<li><a href=\"#{$widget_id}-tab-{$id}\">{$tab['title']}</a></li>";
                
                $content .= "<div class=\"tab-pane\" id=\"{$widget_id}-tab-{$id}\">".do_shortcode($tab['body']).'</div>';
        
