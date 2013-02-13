@@ -349,20 +349,12 @@ add_action('widgets_init', 'tabbed_section_widget_init');
 add_action('init', 'tabbed_section_widget_load_scripts');
 add_action('wp_footer', 'print_script');
 
-	 function print_script() {
-		
-		#var_dump(OLT_Tabbed_Section_Widget::$widget_ids);
-		echo '<script type="text/javascript">';
-		foreach ( OLT_Tabbed_Section_Widget::$widget_ids as $widget_id ) {
-			?>
-			jQuery(function () { jQuery('#<?php echo $widget_id; ?> a').click(function (e) { e.preventDefault();
-			jQuery(this).tab('show'); }) 
-			jQuery('#<?php echo $widget_id; ?> a:first').tab('show'); })
-			<?php
-		
-		}
-		echo '</script>';
-		
-	}
-
-?>
+function print_script() {
+	echo '<script type="text/javascript">';
+	foreach ( OLT_Tabbed_Section_Widget::$widget_ids as $widget_id ) { ?>
+	jQuery(function () { jQuery('#<?php echo $widget_id; ?> a').click(function (e) { e.preventDefault();
+	jQuery(this).tab('show'); })
+	jQuery('#<?php echo $widget_id; ?> a:first').tab('show'); })
+<?php }
+	echo '</script>';
+}
