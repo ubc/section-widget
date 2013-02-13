@@ -14,6 +14,10 @@ include_once('section-widget-options-page.php');
  * @extends WP_Widget
  */
 class OLT_Tabbed_Section_Widget extends WP_Widget {
+
+
+	public static $widget_ids = array();
+
     /**
      * OLT_Tabbed_Section_Widget function.
      * 
@@ -24,7 +28,12 @@ class OLT_Tabbed_Section_Widget extends WP_Widget {
         $widget_ops = array('classname' => 'section-widget-tabbed', 'description' => __('Display section-specific content in tabs.'));
         $control_ops = array('width' => 400);
         $this->WP_Widget('section-tabbed', __('Section (Tabbed)'), $widget_ops, $control_ops);
+        
+        
     }
+    
+
+    
     /**
      * widget function.
      * 
@@ -90,12 +99,20 @@ class OLT_Tabbed_Section_Widget extends WP_Widget {
             if ( $current_tabs_theme_support == 'twitter-bootstrap' ) {
             
             echo apply_filters('widget_text', $html);
+            
+            #$array_stuff = self::$widget_ids;
+            
+            #array_push($array_stuff, $widget_id);
+            
+            if ( is_null(self::$widget_ids) ) {
+            	self::$widget_ids = array ( $widget_id );
+            } else {
+            	array_push(self::$widget_ids, $widget_id);
+            }
+            #self::$widget_ids=self::$widget_ids;
+
             ?>
-            <script>
-			jQuery(function () { jQuery('#<?php echo $widget_id; ?> a').click(function (e) { e.preventDefault();
-			jQuery(this).tab('show'); }) 
-			jQuery('#<?php echo $widget_id; ?> a:first').tab('show'); })
-			</script> 
+       
             <?php
             } else {        
             echo '<div class="swt-outter"><div class="swt-wrapper">';
@@ -330,5 +347,22 @@ function tabbed_section_widget_load_scripts() {
 ### Function: Init Section Widget
 add_action('widgets_init', 'tabbed_section_widget_init');
 add_action('init', 'tabbed_section_widget_load_scripts');
+add_action('wp_footer', 'print_script');
+
+	 function print_script() {
+		
+		#var_dump(OLT_Tabbed_Section_Widget::$widget_ids);
+		echo '<script type="text/javascript">';
+		foreach ( OLT_Tabbed_Section_Widget::$widget_ids as $widget_id ) {
+			?>
+			jQuery(function () { jQuery('#<?php echo $widget_id; ?> a').click(function (e) { e.preventDefault();
+			jQuery(this).tab('show'); }) 
+			jQuery('#<?php echo $widget_id; ?> a:first').tab('show'); })
+			<?php
+		
+		}
+		echo '</script>';
+		
+	}
 
 ?>
