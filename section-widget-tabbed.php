@@ -353,8 +353,15 @@ function tabbed_section_widget_load_scripts() {
         if(is_active_widget(false,false,'section-tabbed')) {    
             if($theme != 'none')
                 wp_enqueue_style("section-widget-theme-{$theme}", plugins_url("section-widget/themes/theme-loader.php?theme={$theme}&scope=").urlencode($scope));
-            
-            wp_enqueue_script('section-widget', plugins_url('section-widget/section-widget.js'), array('jquery','jquery-ui-tabs'));
+      
+        $current_tabs_theme_support = reset( get_theme_support('tabs'));
+         
+         if ( $current_tabs_theme_support != 'twitter-bootstrap' ):
+         
+           wp_enqueue_script('section-widget', plugins_url('section-widget/section-widget.js'), array('jquery','jquery-ui-tabs'));
+         endif;  
+           
+           
         }
     }
 }
