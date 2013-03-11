@@ -65,8 +65,22 @@ class OLT_Tabbed_Section_Widget extends WP_Widget {
             #var_dump(get_theme_support('tabs')[0]);
             if ( $current_tabs_theme_support == 'twitter-bootstrap' ) {
             foreach($instance['tabs'] as $id => $tab) {
-           		$list .= "<li><a href=\"#{$widget_id}-tab-{$id}\">{$tab['title']}</a></li>";
-				$content .= "<div class=\"tab-pane\" id=\"{$widget_id}-tab-{$id}\">".do_shortcode($tab['body']).'</div>';
+            #var_dump($id);
+            if ( $id == 0 ):
+            	$list .= "<li class=\"active\">";
+            else:
+            	$list .= "<li>";
+            endif;
+           		$list .= "<a href=\"#{$widget_id}-tab-{$id}\">{$tab['title']}</a></li>";
+           		
+           		
+           	if ( $id == 0 ):
+           		$content .= "<div class=\"tab-pane active\" ";
+           	else:
+           		$content .= "<div class=\"tab-pane\" ";
+           	endif;
+           	
+				$content .= "id=\"{$widget_id}-tab-{$id}\">".do_shortcode($tab['body']).'</div>';
             }
             } else {
             foreach($instance['tabs'] as $id => $tab) {
@@ -77,6 +91,7 @@ class OLT_Tabbed_Section_Widget extends WP_Widget {
             $heightFixClass = ($heightfix)? ' class="swt-height-fix"' : '';
             if ( $current_tabs_theme_support == 'twitter-bootstrap' ) {            
             $html = '<ul class="nav nav-tabs" id="'.$widget_id.'">';
+            #$html .= 
             $html .= $list;
             $html .= '</ul>';
             $html .= "<div class='tab-content'>";
@@ -97,25 +112,25 @@ class OLT_Tabbed_Section_Widget extends WP_Widget {
             }
             
             if ( $current_tabs_theme_support == 'twitter-bootstrap' ) {
+            	
+            	
             
             echo apply_filters('widget_text', $html);
-            
-            #$array_stuff = self::$widget_ids;
-            
-            #array_push($array_stuff, $widget_id);
             
             if ( is_null(self::$widget_ids) ) {
             	self::$widget_ids = array ( $widget_id );
             } else {
             	array_push(self::$widget_ids, $widget_id);
             }
-            #self::$widget_ids=self::$widget_ids;
 
             ?>
        
             <?php
             } else {        
             echo '<div class="swt-outter"><div class="swt-wrapper">';
+            
+            
+            
             echo apply_filters('widget_text', $html);
             echo '</div></div>';
             }
@@ -351,10 +366,10 @@ add_action('wp_footer', 'print_script');
 
 function print_script() {
 	echo '<script type="text/javascript">';
-	foreach ( OLT_Tabbed_Section_Widget::$widget_ids as $widget_id ) { ?>
-	jQuery(function () { jQuery('#<?php echo $widget_id; ?> a').click(function (e) { e.preventDefault();
-	jQuery(this).tab('show'); })
-	jQuery('#<?php echo $widget_id; ?> a:first').tab('show'); })
-<?php }
+	#foreach ( OLT_Tabbed_Section_Widget::$widget_ids as $widget_id ) { ?>
+	jQuery(function () { jQuery('.nav-tabs a').click(function (e) { e.preventDefault();
+	jQuery(this).tab('show'); }) });
+
+<?php 
 	echo '</script>';
 }
