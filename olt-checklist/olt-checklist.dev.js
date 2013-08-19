@@ -9,7 +9,8 @@ jQuery(document).ready(function($){
     OLTChecklistInit(document); // For non-pane checklists
     
     // Tabbify on tab-click
-    $('div.olt-checklist-wrapper>ul.ui-tabs-nav>li>a').live('click', function(e){
+    $('#widgets-right ').delegate('div.olt-checklist-wrapper .ui-tabs-nav a','click','', function(e){
+ 
         e.preventDefault();
         
         var container = $(this).parents('div.olt-checklist-wrapper:first');
@@ -22,18 +23,18 @@ jQuery(document).ready(function($){
     });
     
     // Controls wrapper
-    $('div.olt-checklist-entry').live('mouseover', function(){
+    $('#widgets-right ').delegate('div.olt-checklist-entry', 'mouseover','', function(){
         $(this).children('span.olt-checklist-controls-wrapper').show();
     });
-    $('div.olt-checklist-entry').live('mouseout', function(){
+    $('#widgets-right').delegate('div.olt-checklist-entry', 'mouseout','', function(){
         $(this).children('span.olt-checklist-controls-wrapper').hide();
     });
     
     // Controls
-    $('a.olt-checklist-controls-collapse').live('click', OLTChecklistCollapse);
-    $('a.olt-checklist-controls-expand').live('click', OLTChecklistCollapse);
-    $('a.olt-checklist-controls-select').live('click', OLTChecklistSelect);
-    $('a.olt-checklist-controls-deselect').live('click', OLTChecklistSelect);
+    $('#widgets-right').delegate('a.olt-checklist-controls-collapse','click','', OLTChecklistCollapse );
+    $('#widgets-right').delegate('a.olt-checklist-controls-expand','click','', OLTChecklistCollapse );
+    $('#widgets-right').delegate('a.olt-checklist-controls-select','click','', OLTChecklistSelect);
+    $('#widgets-right').delegate('a.olt-checklist-controls-deselect','click','', OLTChecklistSelect);
     
     // Actions for the contorls...
     
@@ -70,6 +71,7 @@ jQuery(document).ready(function($){
 });
 
 function OLTChecklistPaneInit(e){
+	console.log(e);
     e = e || jQuery('div.olt-checklist-wrapper');
         
     jQuery(e).each(function(i,e){

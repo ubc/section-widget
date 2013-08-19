@@ -2,7 +2,7 @@
 Contributors: oltdev, godfreykfc, enej, ubcdev, ctlt-dev, ctlt-dev
 Tags: text, html, shortcode, tabs, tabbed, widget, conditional, section, per page, post type, taxonomies
 Requires at least: 3.2
-Tested up to: 3.3.1
+Tested up to: 3.6
 Stable tag: trunk
 
 Display arbitrary information only on selected sections of your site. Also allows you to easily organize them into tabs in your sidebar.
@@ -15,7 +15,7 @@ Ever wanted to display a widget only on the front page? Subpages of certain page
 
 In addition to plain text and HTML, we have added **shortcodes** support into the mix. This means you can easily turn your crazy widget ideas into reality. Need a RSS widget for the posts in the "Movies" category? Yep, [there is a shortcode for that][2]. Show your AdSense ads only on the front page? [There is a shortcode for that too][3] - not to mention [tag clouds][4], [Paypal][5], [Amazon][6]... you name it. Or throw more CMS hotness into your sidebar with our [conditional custom fields][7] shortcodes. Checkout the [screenshots][8] for more inspirations.
 
-But before you hit the download button, we have saved a surprise for you. In order to help you fit all those insane ideas into your already crowded sidebar, we have decided to add **tabs** to the equation. With an intuitive drag-and-drop interface, creating your own tabbed widget is completely effortless - even for your grandparents. (See the [screenshots][8] for details.) To bring this to the next level, we have bundled *25 (!) switchable themes*  (powered by the [jQuery UI][9] project) with the plugin - and we even included a live preview in the settings page! And of course, you can always roll your own theme to suit the design of your site. (A lite version with the 2 basic themes is also available [here][10].)
+But before you hit the download button, we have saved a surprise for you. In order to help you fit all those insane ideas into your already crowded sidebar, we have decided to add **tabs** to the equation. With an intuitive drag-and-drop interface, creating your own tabbed widget is completely effortless - even for your grandparents. (See the [screenshots][8] for details.) To bring this to the next level, we have bundled *25 (!) switchable themes*  (powered by the [jQuery UI][9] project) with the plugin - and we even included a on preview in the settings page! And of course, you can always roll your own theme to suit the design of your site. (A lite version with the 2 basic themes is also available [here][10].)
 
 With all those awesome features, you should definitely download it and try it out. If you still cannot find a need for this, you're probably using WordPress the wrong way ;) Let us know what you think, drop us a line at the [forums][11] - we would love to hear about your creative ways of using this plugin!
 
@@ -70,7 +70,7 @@ In this version, you can freely mix and match these predefined rules which gives
 
 **How do I switch themes?**
 
-Go to the **Section Widget** settings page (under the **Appearance** admin menu). Select any themes from the drop-down. Click "Preview" to show the live preview.
+Go to the **Section Widget** settings page (under the **Appearance** admin menu). Select any themes from the drop-down. Click "Preview" to show the on preview.
 
 **I cannot see the widget!!!**
 
@@ -129,7 +129,7 @@ You can remove any unneeded themes but deleting the corresponding folder in the 
 
 5. How it looks on an actual page
 
-6. Switching themes - with live preview
+6. Switching themes - with on preview
 
 7. (Ideas) Giving your confused visitors a helping hand
 
@@ -142,6 +142,8 @@ You can remove any unneeded themes but deleting the corresponding folder in the 
 
 
 == Changelog ==
+= Version 3.2 = 
+* Updated to work with WP3.6 
 
 = Version 3.1 =
 * Added support for post types

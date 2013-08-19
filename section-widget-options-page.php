@@ -8,9 +8,8 @@ add_action('admin_menu', 'tabbed_section_widget_add_option_page');
  * @return void
  */
 function tabbed_section_widget_add_option_page() {
-$current_tabs_theme_support = reset( get_theme_support('tabs') );
-            #var_dump( $current_tabs_theme_support );
-
+	$current_tabs_theme_support = reset( get_theme_support('tabs') );
+     
 	if ( $current_tabs_theme_support == 'twitter-bootstrap' ) {
     #add_theme_page(__('Section Widget Settings','section-widget'), __('Section Widget','section-widget'), 10, 'section-widget', 'tabbed_section_widget_option_page');
     } else {
@@ -222,5 +221,3 @@ function theme_display_name($theme_folder) {
     
     return implode(' ', $parts);
 }
-
-?>

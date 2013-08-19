@@ -31,7 +31,7 @@ div.olt-checklist-wrapper>ul.ui-tabs-nav>li a {
     line-height: 12px;
 }
 
-div.olt-checklist-wrapper>ul.ui-tabs-nav>li.ui-tabs-selected {
+div.olt-checklist-wrapper>ul.ui-tabs-nav>li.ui-state-active {
     -moz-border-radius: 3px 3px 0 0;
     -webkit-border-top-left-radius: 3px;
     -webkit-border-top-right-radius: 3px;
@@ -45,7 +45,7 @@ div.olt-checklist-wrapper>ul.ui-tabs-nav>li.ui-tabs-selected {
     background-color: #ededed;
 }
 
-div.olt-checklist-wrapper>ul.ui-tabs-nav>li.ui-tabs-selected a {
+div.olt-checklist-wrapper>ul.ui-tabs-nav>li.ui-state-active a {
     color: #000000;
 }
 
