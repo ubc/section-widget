@@ -61,7 +61,13 @@ class OLT_Tabbed_Section_Widget extends WP_Widget {
             
             $list = '';
             $content = '';
-            $current_tabs_theme_support = reset( get_theme_support('tabs'));
+           
+            if( is_array(  get_theme_support('tabs') ) ) {
+            	$current_tabs_theme_support = reset( get_theme_support('tabs') );
+            } else {
+            	$current_tabs_theme_support = false;
+            }
+            
             
             if ( $current_tabs_theme_support == 'twitter-bootstrap' ) {
             foreach($instance['tabs'] as $id => $tab) {
@@ -128,9 +134,6 @@ class OLT_Tabbed_Section_Widget extends WP_Widget {
             <?php
             } else {        
             echo '<div class="swt-outter"><div class="swt-wrapper">';
-            
-            
-            
             echo apply_filters('widget_text', $html);
             echo '</div></div>';
             }
