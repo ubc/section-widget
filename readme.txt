@@ -1,7 +1,7 @@
 === Section Widget ===
 Contributors: oltdev, godfreykfc, enej, ubcdev, ctlt-dev, ctlt-dev
 Tags: text, html, shortcode, tabs, tabbed, widget, conditional, section, per page, post type, taxonomies
-Requires at least: 3.2
+Requires at least: 3.6
 Tested up to: 3.6
 Stable tag: trunk
 
@@ -19,6 +19,7 @@ But before you hit the download button, we have saved a surprise for you. In ord
 
 With all those awesome features, you should definitely download it and try it out. If you still cannot find a need for this, you're probably using WordPress the wrong way ;) Let us know what you think, drop us a line at the [forums][11] - we would love to hear about your creative ways of using this plugin!
 
+*If you are running a earlier version of the WordPress 3.5 or earlier don't use the latest version of the plugin.*
 
 = Built-in Conditionals =
 
@@ -142,6 +143,9 @@ You can remove any unneeded themes but deleting the corresponding folder in the 
 
 
 == Changelog ==
+= Version 3.2.1 = 
+* Bug fix, reset should be not be something we check for.
+
 = Version 3.2 = 
 * Updated to work with WP3.6 
 
