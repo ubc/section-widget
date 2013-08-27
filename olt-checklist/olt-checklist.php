@@ -94,7 +94,7 @@ if(!function_exists('olt_checklist')) {
             $output .= "  </div>\n";
         }
         
-        if(!in_array('pages', $exclude)) {
+        if(!in_array('pages', $exclude) ) {
             $output .= "  <div id=\"{$id}-pages\">\n";
             $output .= "  <p class=\"olt-checklist-tab-description\">Display this widget on these pages.</p>\n";
             $output .= olt_checklist('pages', $args['pages']);
@@ -134,28 +134,28 @@ if(!function_exists('olt_checklist')) {
             case 'special-pages':
                 $defaults = array( 'selected' => array(), 'echo' => 1, 'id' => 'olt-checklist-special-pages', 'name' => 'olt-checklist-special-pages', 'exclude' => array());
                 $data = array(
-                    (object) array( 'id' => 'all', 'name' =>  __('Everywhere','section-widget'),
+                    (object) array( 'parent' => 0,'id' => 'all', 'name' =>  __('Everywhere','section-widget'),
                                     'description' => __('Display this widget everywhere on your site, i.e. behave like any other widgets.','section-widget')),
-                    (object) array( 'id' => 'front', 'name' =>  __('Front Page','section-widget'),
+                    (object) array('parent' => 0, 'id' => 'front', 'name' =>  __('Front Page','section-widget'),
                                     'description' => __('Display this widget on the front page, as determined by your site\'s <a href="'.admin_url('options-reading.php').'">Reading Settings</a>.','section-widget')),
-                    (object) array( 'id' => 'home', 'name' =>  __('Posts page','section-widget'),
+                    (object) array('parent' => 0, 'id' => 'home', 'name' =>  __('Posts page','section-widget'),
                                     'description' => __('Display this widget on the posts page (i.e. your blog). This is usually your front page, but it can be changed in the  <a href="'.admin_url('options-reading.php').'">Reading Settings</a>.','section-widget')),
-                    (object) array('id' => 'category', 'name' => __('Selected Category Archive Pages','section-widget'),
+                    (object) array('parent' => 0, 'id' => 'category', 'name' => __('Selected Category Archive Pages','section-widget'),
                                    'description' => __('Display this widget on a category archive page if the corresponding category is selected in the <strong>Categories</strong> tab.','section-widget')),
-                    (object) array('id' => 'tag', 'name' => __('Selected Tag Archive Pages','section-widget'),
+                    (object) array('parent' => 0, 'id' => 'tag', 'name' => __('Selected Tag Archive Pages','section-widget'),
                                    'description' => __('Display this widget on a tag archive page if the corresponding tag is selected in the <strong>Tags</strong> tab.','section-widget')),
-                    (object) array('id' => 'allcategory', 'name' => __('All Category Archive Pages','section-widget'),
+                    (object) array('parent' => 0, 'id' => 'allcategory', 'name' => __('All Category Archive Pages','section-widget'),
                                    'description' => __('Display this widget on all category archive pages.','section-widget')),
-                    (object) array('id' => 'alltag', 'name' => __('All Tag Archive Pages','section-widget'),
+                    (object) array('parent' => 0, 'id' => 'alltag', 'name' => __('All Tag Archive Pages','section-widget'),
                                    'description' => __('Display this widget on all tag archive pages.','section-widget')),
-                    (object) array('id' => 'date', 'name' => __('All Date-Based Archive Pages','section-widget'),
+                    (object) array('parent' => 0, 'id' => 'date', 'name' => __('All Date-Based Archive Pages','section-widget'),
                                    'description' => __('Display this widget on all date-based archive pages (i.e. all monthly, yearly, daily or time-based archives).','section-widget')),
-                    (object) array('id' => 'page', 'name' => __('All Pages','section-widget'), 'description' => __('Display this widget on all pages.','section-widget')),
-                    (object) array('id' => 'post', 'name' => __('All Post','section-widget'), 'description' => __('Display this widget on all posts.','section-widget')),
-                    (object) array('id' => 'comment', 'name' => __('Commentable Pages/Posts','section-widget'), 'description' => __('Display this widget on all pages/posts where comments are allowed.','section-widget')),
-                    (object) array('id' => 'author', 'name' => __('Author Pages','section-widget'), 'description' => __('Display this widget on all author pages.','section-widget')),
-                    (object) array('id' => 'search', 'name' => __('Search Results','section-widget'), 'description' => __('Display this widget on all search result pages.','section-widget')),
-                    (object) array('id' => 'notfound', 'name' => __('&quot;Not Found&quot; Pages','section-widget'), 'description' => __('Display this widget when a requested page cannot be found.','section-widget'))
+                    (object) array('parent' => 0, 'id' => 'page', 'name' => __('All Pages','section-widget'), 'description' => __('Display this widget on all pages.','section-widget')),
+                    (object) array('parent' => 0, 'id' => 'post', 'name' => __('All Post','section-widget'), 'description' => __('Display this widget on all posts.','section-widget')),
+                    (object) array('parent' => 0, 'id' => 'comment', 'name' => __('Commentable Pages/Posts','section-widget'), 'description' => __('Display this widget on all pages/posts where comments are allowed.','section-widget')),
+                    (object) array('parent' => 0, 'id' => 'author', 'name' => __('Author Pages','section-widget'), 'description' => __('Display this widget on all author pages.','section-widget')),
+                    (object) array('parent' => 0, 'id' => 'search', 'name' => __('Search Results','section-widget'), 'description' => __('Display this widget on all search result pages.','section-widget')),
+                    (object) array('parent' => 0, 'id' => 'notfound', 'name' => __('&quot;Not Found&quot; Pages','section-widget'), 'description' => __('Display this widget when a requested page cannot be found.','section-widget'))
                     
         
                 );
@@ -166,9 +166,9 @@ if(!function_exists('olt_checklist')) {
 		    		$type = get_post_type_object($post_type);
 		    		
 		    		if($type->publicly_queryable):
-                    	array_push($data, (object) array('id' => 'cpts-'.$post_type, 'name' => __('All ','section-widget').$type->labels->name, 'description' => __('Display this widget on all ','section-widget').$type->labels->name.__(' single pages','section-widget')));
+                    	array_push($data, (object) array('parent' => 0, 'id' => 'cpts-'.$post_type, 'name' => __('All ','section-widget').$type->labels->name, 'description' => __('Display this widget on all ','section-widget').$type->labels->name.__(' single pages','section-widget')));
                     	if($type->has_archive):
-                    		array_push($data, (object) array('id' => 'cpta-'.$post_type, 'name' => $type->labels->name. __(" Archive Pages",'section-widget'), 'description' => __('Display this widget on all ','section-widget').$type->labels->name.__(' archive pages','section-widget')));
+                    		array_push($data, (object) array('parent' => 0, 'id' => 'cpta-'.$post_type, 'name' => $type->labels->name. __(" Archive Pages",'section-widget'), 'description' => __('Display this widget on all ','section-widget').$type->labels->name.__(' archive pages','section-widget')));
                     	endif;
                     endif;
                     	
@@ -179,7 +179,7 @@ if(!function_exists('olt_checklist')) {
 				foreach ($taxonomies as $taxonomie):
 		    		$tax = get_taxonomy($taxonomie);
 		    	
-                    array_push($data, (object) array('id' => 'cta--'.$taxonomie, 'name' => __("All ",'section-widget').$tax->labels->name. __(" Archive Pages",'section-widget'), 'description' => __('Display this widget on all ','section-widget').$type->labels->name.__(' taxonomy archive pages','section-widget')));
+                    array_push($data, (object) array('parent' => 0, 'id' => 'cta--'.$taxonomie, 'name' => __("All ",'section-widget').$tax->labels->name. __(" Archive Pages",'section-widget'), 'description' => __('Display this widget on all ','section-widget').$type->labels->name.__(' taxonomy archive pages','section-widget')));
 
 				endforeach;
 				
@@ -375,11 +375,11 @@ if(!function_exists('olt_checklist')) {
     class OLTSpecialPagesChecklistWalker extends Walker {
     
         var $tree_type = 'special';
-        var $db_fields = array ('parent' => 'parent', 'id' => 'id');
+        var $db_fields = array ( 'parent' => 'parent', 'id' => 'id');
         
         function start_el(&$output, $special_page, $depth, $args) {
             extract($args);
-            
+           
             if(in_array($special_page->id, $exclude)) return;
             
             $id = "{$id}-{$special_page->id}";

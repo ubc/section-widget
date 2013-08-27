@@ -143,6 +143,10 @@ You can remove any unneeded themes but deleting the corresponding folder in the 
 
 
 == Changelog ==
+= Version 3.2.2 =
+* More bug fixes and php notices removed. 
+
+ 
 = Version 3.2.1 = 
 * Bug fix, reset should be not be something we check for.
 

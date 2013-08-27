@@ -8,7 +8,10 @@ add_action('admin_menu', 'tabbed_section_widget_add_option_page');
  * @return void
  */
 function tabbed_section_widget_add_option_page() {
-	$current_tabs_theme_support = reset( get_theme_support('tabs') );
+	$theme_support = get_theme_support('tabs');
+	$current_tabs_theme_support = false;
+	if(is_array($theme_support) )
+	$current_tabs_theme_support = reset( $theme_support );
      
 	if ( $current_tabs_theme_support == 'twitter-bootstrap' ) {
     #add_theme_page(__('Section Widget Settings','section-widget'), __('Section Widget','section-widget'), 10, 'section-widget', 'tabbed_section_widget_option_page');
@@ -77,15 +80,15 @@ function tabbed_section_widget_option_page() {
     
     // Tags archive
     $tag = get_tags('number=1');
-        
+    
     if(count($tag) > 0)
-        $links[] = get_tag_link($tag[0]->term_ID);
+        $links[] = get_tag_link($tag[0]->term_id);
     
     // Cats archive
     $cat = get_categories('number=1');
     
     if(count($cat) > 0)
-        $links[] = get_category_link($cat[0]->cat_ID);
+        $links[] = get_category_link($cat[0]->term_id);
     
     // And the 404
     $links[] = get_bloginfo('wpurl') . '/' . md5('random');

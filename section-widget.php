@@ -5,7 +5,7 @@ Plugin Name: Section Widget
 Plugin URI: http://blogs.ubc.ca/support/plugins/section-widget/
 Description: Display arbitrary text or HTML on certain sections of your site.
 Author: Godfrey Chan (UBC CTLT), Enej, 
-Version: 3.2.1
+Version: 3.2.2
 Author URI: http://www.chancancode.com/
 */
 
@@ -145,7 +145,8 @@ class OLT_Section_Widget extends WP_Widget {
      */
     function form( $instance ) {
         // For backwards compatibility:
-        if(is_array($instance) && !is_array($instance['conditions'])) {
+        
+        if(is_array($instance) && isset($instance['conditions']) && !is_array($instance['conditions'])) {
             $instance['conditions'] = array(
                 'special-pages' => $instance['special-pages'],
                 'pages'         => $instance['pages'],
