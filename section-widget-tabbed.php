@@ -365,12 +365,14 @@ function tabbed_section_widget_load_scripts() {
 	                wp_enqueue_style("section-widget-theme-{$theme}", 
 	                plugins_url("section-widget/themes/theme-loader.php?theme={$theme}&scope=").urlencode($scope));
 	      		endif;
-	      		
-	        $current_tabs_theme_support = reset( get_theme_support('tabs') );
+	      	
+	      	$current_tabs_theme_support = false;
+	      	if( is_array( get_theme_support('tabs') ) )
+	        	$current_tabs_theme_support = reset( get_theme_support('tabs') );
          
 	         if ( $current_tabs_theme_support != 'twitter-bootstrap' ):
 	         	wp_enqueue_script('section-widget', 
-	           		plugins_url('section-widget/js/section-widget'. $suffix.'.js'), array('jquery','jquery-ui-tabs'));
+	           		plugins_url('section-widget/js/section-widget'. $suffix.'.js'), array('jquery','jquery-ui-tabs') );
 	           
 	         endif;   // uses_twitter_bootstrap ?
            
