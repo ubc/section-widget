@@ -279,7 +279,7 @@ class OLT_Tabbed_Section_Widget extends WP_Widget {
                 <div  id="<?php echo $this->get_field_id('designer-main') ?>" class="olt-swt-designer-main">
                     <ul>
                         <?php foreach($tabs as $id => $tab): ?>
-                        <li class="olt-swt-designer-tab" id="<?php echo $this->get_field_id('tab-'.$id); ?>-list">
+                        <li class="olt-swt-designer-tab" id="<?php echo $this->get_field_id('tab_'.$id); ?>">
                             <a href="#<?php echo $this->get_field_id('tab-'.$id); ?>" id="<?php echo $this->get_field_id('tab-'.$id.'-title-link'); ?>">
                                 <?php echo esc_html($tab['title']); ?>
                             </a>
