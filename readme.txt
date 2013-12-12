@@ -2,7 +2,7 @@
 Contributors: oltdev, godfreykfc, enej, ubcdev, ctlt-dev, ctlt-dev
 Tags: text, html, shortcode, tabs, tabbed, widget, conditional, section, per page, post type, taxonomies
 Requires at least: 3.6
-Tested up to: 3.6
+Tested up to: 3.8
 Stable tag: trunk
 
 Display arbitrary information only on selected sections of your site. Also allows you to easily organize them into tabs in your sidebar.
@@ -143,6 +143,9 @@ You can remove any unneeded themes but deleting the corresponding folder in the 
 
 
 == Changelog ==
+
+= Version 3.2.4 =
+* fixed more strict php warnings and updated depricated use of user level function
 
 = Version 3.2.3 =
 * Another bug fix… 
