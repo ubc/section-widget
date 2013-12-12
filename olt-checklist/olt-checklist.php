@@ -376,8 +376,8 @@ if(!function_exists('olt_checklist')) {
     
         var $tree_type = 'special';
         var $db_fields = array ( 'parent' => 'parent', 'id' => 'id');
-        
-        function start_el(&$output, $special_page, $depth, $args) {
+
+        function start_el(&$output, $special_page, $depth = 0, $args = array(), $current_object_id = 0) {
             extract($args);
            
             if(in_array($special_page->id, $exclude)) return;
@@ -400,17 +400,17 @@ if(!function_exists('olt_checklist')) {
      */
     class OLTChecklistWalker extends Walker {
         
-        function start_lvl(&$output, $depth, $args) {
+        function start_lvl(&$output, $depth=0, $args=array()) {
             $indent = str_repeat("\t", $depth);
             $output .= "$indent<ul class='children'>\n";
         }
         
-        function end_lvl(&$output, $depth, $args) {
+        function end_lvl(&$output, $depth=0, $args=array()) {
             $indent = str_repeat("\t", $depth);
             $output .= "$indent</ul>\n";
         }
         
-        function end_el(&$output, $page, $depth, $args) {
+        function end_el(&$output, $page, $depth=0, $args=array()) {
             $output .= "</li>\n";
         }
     }
@@ -423,8 +423,8 @@ if(!function_exists('olt_checklist')) {
     
         var $tree_type = 'page';
         var $db_fields = array ('parent' => 'post_parent', 'id' => 'ID');
-        
-        function start_el(&$output, $page, $depth, $args) {
+
+        function start_el(&$output, $page, $depth=0, $args=array(), $current_object_id=0) {
             extract($args);
             
             $pad = str_repeat('&nbsp;', $depth * 4);
@@ -447,8 +447,7 @@ if(!function_exists('olt_checklist')) {
     
         var $tree_type = 'category';
         var $db_fields = array ('parent' => 'parent', 'id' => 'term_id');
-        
-        function start_el(&$output, $category, $depth, $args) {
+        function start_el(&$output, $category, $depth=0, $args=array(), $current_object_id=0) {
             extract($args);
             
             $pad = str_repeat('&nbsp;', $depth * 4);
@@ -472,7 +471,7 @@ if(!function_exists('olt_checklist')) {
         var $tree_type = 'tag';
         var $db_fields = array ('parent' => 'parent', 'id' => 'term_id');
         
-        function start_el(&$output, $tag, $depth, $args) {
+        function start_el(&$output, $tag, $depth=0, $args=array(), $current_object_id=0) {
             extract($args);
             
             $id = "{$id}-{$tag->term_id}";

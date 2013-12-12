@@ -16,7 +16,7 @@ function tabbed_section_widget_add_option_page() {
 	if ( $current_tabs_theme_support == 'twitter-bootstrap' ) {
     #add_theme_page(__('Section Widget Settings','section-widget'), __('Section Widget','section-widget'), 10, 'section-widget', 'tabbed_section_widget_option_page');
     } else {
-    	add_theme_page(__('Section Widget Settings','section-widget'), __('Section Widget','section-widget'), 10, 'section-widget', 'tabbed_section_widget_option_page');
+    	add_theme_page(__('Section Widget Settings','section-widget'), __('Section Widget','section-widget'), 'activate_plugins', 'section-widget', 'tabbed_section_widget_option_page');
     }
 }
 /**
