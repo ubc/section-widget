@@ -57,9 +57,14 @@ class OLT_Section_Widget extends WP_Widget {
     function widget( $args, $instance ) {
         extract($args);
         
+        // $instance['conditions'] had to be renamed to $instance['section_conditions'] to resolve conflict with the Jetpack plugin
         // For backwards compatibility:
-        if(!is_array($instance['conditions'])) {
-            $instance['conditions'] = array(
+        if(!is_array($instance['section_conditions']) && is_array($instance['conditions'])) {
+            $instance['section_conditions'] = $instance['conditions'];
+        }
+        // For backwards compatibility:
+        if(!is_array($instance['section_conditions'])) {
+            $instance['section_conditions'] = array(
                 'special-pages' => $instance['special-pages'],
                 'pages'         => $instance['pages'],
                 'categories'    => $instance['categories'],
@@ -68,7 +73,7 @@ class OLT_Section_Widget extends WP_Widget {
         }
         
         // olt_checklist_conditions_check is the replacement for $should_display
-        if(olt_checklist_conditions_check($instance['conditions'])) {
+        if(olt_checklist_conditions_check($instance['section_conditions'])) {
             echo $before_widget;
             
             if($instance['display-title']){
@@ -94,8 +99,8 @@ class OLT_Section_Widget extends WP_Widget {
         $instance = $old_instance;
         
         // For backwards compatibility:
-        if(!is_array($instance['conditions'])) {
-            $instance['conditions'] = array(
+        if(!is_array($instance['section_conditions'])) {
+            $instance['section_conditions'] = array(
                 'special-pages' => $instance['special-pages'],
                 'pages'         => $instance['pages'],
                 'categories'    => $instance['categories'],
@@ -111,25 +116,25 @@ class OLT_Section_Widget extends WP_Widget {
         $instance['title'] = strip_tags($new_instance['title']);
         $instance['display-title'] = (bool) $new_instance['display-title'];
         
-        $instance['conditions']['special-pages'] =
-            is_array($new_instance['conditions']['special-pages'])?
-                $new_instance['conditions']['special-pages'] : array();
+        $instance['section_conditions']['special-pages'] =
+            is_array($new_instance['section_conditions']['special-pages'])?
+                $new_instance['section_conditions']['special-pages'] : array();
         
-        $instance['conditions']['special-pages'] =
-            is_array($new_instance['conditions']['special-pages'])?
-                $new_instance['conditions']['special-pages'] : array();
+        $instance['section_conditions']['special-pages'] =
+            is_array($new_instance['section_conditions']['special-pages'])?
+                $new_instance['section_conditions']['special-pages'] : array();
         
-        $instance['conditions']['pages'] =
-            is_array($new_instance['conditions']['pages'])?
-                $new_instance['conditions']['pages'] : array();
+        $instance['section_conditions']['pages'] =
+            is_array($new_instance['section_conditions']['pages'])?
+                $new_instance['section_conditions']['pages'] : array();
         
-        $instance['conditions']['categories'] =
-            is_array($new_instance['conditions']['categories'])?
-                $new_instance['conditions']['categories'] : array();
+        $instance['section_conditions']['categories'] =
+            is_array($new_instance['section_conditions']['categories'])?
+                $new_instance['section_conditions']['categories'] : array();
         
-        $instance['conditions']['tags'] =
-            is_array($new_instance['conditions']['tags'])?
-                $new_instance['conditions']['tags'] : array();
+        $instance['section_conditions']['tags'] =
+            is_array($new_instance['section_conditions']['tags'])?
+                $new_instance['section_conditions']['tags'] : array();
         
         $instance['body'] = current_user_can('unfiltered_html')?
             $new_instance['body'] : wp_filter_post_kses( $new_instance['body'] );
@@ -144,10 +149,13 @@ class OLT_Section_Widget extends WP_Widget {
      * @return void
      */
     function form( $instance ) {
-        // For backwards compatibility:
         
-        if(is_array($instance) && isset($instance['conditions']) && !is_array($instance['conditions'])) {
-            $instance['conditions'] = array(
+        // For backwards compatibility:
+        if(!is_array($instance['section_conditions']) && is_array($instance['conditions'])) {
+            $instance['section_conditions'] = $instance['conditions'];
+        }
+        if(is_array($instance) && isset($instance['section_conditions']) && !is_array($instance['section_conditions'])) {
+            $instance['section_conditions'] = array(
                 'special-pages' => $instance['special-pages'],
                 'pages'         => $instance['pages'],
                 'categories'    => $instance['categories'],
@@ -160,7 +168,7 @@ class OLT_Section_Widget extends WP_Widget {
             'title' => '',
             'display-title' => true,
             'body' => '',
-            'conditions' => array(
+            'section_conditions' => array(
                 'special-pages' => array(),
                 'pages' => array(),
                 'categories' => array(),
@@ -169,16 +177,16 @@ class OLT_Section_Widget extends WP_Widget {
         ));
         
         // Make sure second level options are actually arrays
-        foreach($instance['conditions'] as $i => $v)
+        foreach($instance['section_conditions'] as $i => $v)
             if(!is_array($v))
-                $instance['conditions'][$i] = array();
+                $instance['section_conditions'][$i] = array();
                 
         $title = strip_tags($instance['title']);
         $display_title = (bool) $instance['display-title'];
-        $special_pages = $instance['conditions']['special-pages'];
-        $pages = $instance['conditions']['pages'];
-        $categories = $instance['conditions']['categories'];
-        $tags = $instance['conditions']['tags'];
+        $special_pages = $instance['section_conditions']['special-pages'];
+        $pages = $instance['section_conditions']['pages'];
+        $categories = $instance['section_conditions']['categories'];
+        $tags = $instance['section_conditions']['tags'];
         $body = format_to_edit($instance['body']);
 ?>
         <p>
@@ -189,8 +197,8 @@ class OLT_Section_Widget extends WP_Widget {
         </p>
 <?php   
         olt_checklist_pane(array(
-            'id' => $this->get_field_id('conditions'),
-            'name' => $this->get_field_name('conditions'),
+            'id' => $this->get_field_id('section_conditions'),
+            'name' => $this->get_field_name('section_conditions'),
             'special-pages' => array('selected' => $special_pages),
             'pages' => array('selected' => $pages),
             'categories' => array('selected' => $categories),
@@ -205,7 +213,7 @@ class OLT_Section_Widget extends WP_Widget {
         </div>
         <script type="text/javascript">
             if(typeof OLTChecklistPaneInit == 'function')
-                OLTChecklistPaneInit(jQuery('#<?php echo $this->get_field_id('conditions-wrapper'); ?>'));
+                OLTChecklistPaneInit(jQuery('#<?php echo $this->get_field_id('section_conditions-wrapper'); ?>'));
         </script>
 <?php
     }
