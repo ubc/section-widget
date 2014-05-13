@@ -392,7 +392,7 @@ add_action('wp_footer', 'print_script');
 function print_script() {
 	echo '<script type="text/javascript">';
 	#foreach ( OLT_Tabbed_Section_Widget::$widget_ids as $widget_id ) { ?>
-	jQuery(function () { jQuery('.section-widget-tabbed .nav-tabs a').click(function (e) { e.preventDefault();
+	jQuery(function () { jQuery('.section-widget-tabbed .nav-tabs a, widget-inside .nav-tabs a').click(function (e) { e.preventDefault();
 	jQuery(this).tab('show'); }) });
 
 <?php 
