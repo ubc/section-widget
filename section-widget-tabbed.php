@@ -10,7 +10,7 @@ include_once('section-widget-options-page.php');
  */
 /**
  * OLT_Tabbed_Section_Widget class.
- * 
+ *
  * @extends WP_Widget
  */
 class OLT_Tabbed_Section_Widget extends WP_Widget {
@@ -20,23 +20,23 @@ class OLT_Tabbed_Section_Widget extends WP_Widget {
 
     /**
      * OLT_Tabbed_Section_Widget function.
-     * 
+     *
      * @access public
      * @return void
      */
-    function OLT_Tabbed_Section_Widget() {
+    function __construct() {
         $widget_ops = array('classname' => 'section-widget-tabbed', 'description' => __('Display section-specific content in tabs.'));
         $control_ops = array('width' => 400);
         $this->WP_Widget('section-tabbed', __('Section (Tabbed)'), $widget_ops, $control_ops);
-        
-        
-    }
-    
 
-    
+
+    }
+
+
+
     /**
      * widget function.
-     * 
+     *
      * @access public
      * @param mixed $args
      * @param mixed $instance
@@ -44,48 +44,48 @@ class OLT_Tabbed_Section_Widget extends WP_Widget {
      */
     function widget( $args, $instance ) {
         extract($args);
-        
+
         extract(wp_parse_args((array) get_option('section-widget-settings'), array(
             'heightfix' => false // This is all I care about
         )));
-        
+
         if(isset($_GET['swt-scope-test'])) {
             echo $before_widget . '<div class="swt-wrapper">Section Widget Scope Test</div>' . $after_widget;
             return;
         }
-        
+
         // olt_checklist_conditions_check is the replacement for $should_display
         if(olt_checklist_conditions_check($instance['section_conditions'])) {
             if(count($instance['tabs']) == 0)
                 return;
-            
+
             $list = '';
             $content = '';
-           
+
             if( is_array(  get_theme_support('tabs') ) ) {
             	$current_tabs_theme_support = reset( get_theme_support('tabs') );
             } else {
             	$current_tabs_theme_support = false;
             }
-            
-            
+
+
             if ( $current_tabs_theme_support == 'twitter-bootstrap' ) {
             foreach($instance['tabs'] as $id => $tab) {
-           
+
             if ( $id == 0 ):
             	$list .= "<li class=\"active\">";
             else:
             	$list .= "<li>";
             endif;
            		$list .= "<a href=\"#{$widget_id}-tab-{$id}\">{$tab['title']}</a></li>";
-           		
-           		
+
+
            	if ( $id == 0 ):
            		$content .= "<div class=\"tab-pane active\" ";
            	else:
            		$content .= "<div class=\"tab-pane\" ";
            	endif;
-           	
+
 				$content .= "id=\"{$widget_id}-tab-{$id}\">".do_shortcode($tab['body']).'</div>';
             }
             } else {
@@ -95,9 +95,9 @@ class OLT_Tabbed_Section_Widget extends WP_Widget {
             }
             }
             $heightFixClass = ($heightfix)? ' class="swt-height-fix"' : '';
-            if ( $current_tabs_theme_support == 'twitter-bootstrap' ) {            
+            if ( $current_tabs_theme_support == 'twitter-bootstrap' ) {
             $html = '<ul class="nav nav-tabs" id="'.$widget_id.'">';
-            #$html .= 
+            #$html .=
             $html .= $list;
             $html .= '</ul>';
             $html .= "<div class='tab-content'>";
@@ -106,23 +106,23 @@ class OLT_Tabbed_Section_Widget extends WP_Widget {
             } else {
 
 	        $html = "<ul{$heightFixClass}>".$list.'</ul>'.$content;
-            
+
             }
-            
+
             echo $before_widget;
-            
+
             if($instance['display-title']){
                 echo $before_title;
                 echo apply_filters('widget_title', $instance['title']);
                 echo $after_title;
             }
-            
+
             if ( $current_tabs_theme_support == 'twitter-bootstrap' ) {
-            	
-            	
-            
+
+
+
             echo apply_filters('widget_text', $html);
-            
+
             if ( is_null(self::$widget_ids) ) {
             	self::$widget_ids = array ( $widget_id );
             } else {
@@ -130,9 +130,9 @@ class OLT_Tabbed_Section_Widget extends WP_Widget {
             }
 
             ?>
-       
+
             <?php
-            } else {        
+            } else {
             echo '<div class="swt-outter"><div class="swt-wrapper">';
             echo apply_filters('widget_text', $html);
             echo '</div></div>';
@@ -142,7 +142,7 @@ class OLT_Tabbed_Section_Widget extends WP_Widget {
     }
     /**
      * update function.
-     * 
+     *
      * @access public
      * @param mixed $new_instance
      * @param mixed $old_instance
@@ -151,42 +151,42 @@ class OLT_Tabbed_Section_Widget extends WP_Widget {
     function update( $new_instance, $old_instance ) {
         // Mostly borrowed from text widget
         $instance = $old_instance;
-        
+
         // For backwards compatibility:
         if(!is_array($instance['section_conditions']) && is_array($instance['conditions'])) {
             $instance['section_conditions'] = $instance['conditions'];
         }
         $instance['title'] = strip_tags($new_instance['title']);
         $instance['display-title'] = (bool) $new_instance['display-title'];
-        
+
         $instance['section_conditions'] = is_array($new_instance['section_conditions'])?
             $new_instance['section_conditions'] : array();
-        
+
         $instance['section_conditions']['special-pages'] =
             is_array($new_instance['section_conditions']['special-pages'])?
                 $new_instance['section_conditions']['special-pages'] : array();
-        
+
         $instance['section_conditions']['pages'] =
             is_array($new_instance['section_conditions']['pages'])?
                 $new_instance['section_conditions']['pages'] : array();
-        
+
         $instance['section_conditions']['categories'] =
             is_array($new_instance['section_conditions']['categories'])?
                 $new_instance['section_conditions']['categories'] : array();
-        
+
         $instance['section_conditions']['tags'] =
             is_array($new_instance['section_conditions']['tags'])?
                 $new_instance['section_conditions']['tags'] : array();
-        
+
         $instance['tabs'] = array();
-        
+
         if(is_array($new_instance['tabs'])) {
             $tabs = array();
-            
+
             if(isset($new_instance['order']) && $new_instance['order'] != '') {
                 // order=1&order=0&order=2...
                 $order = explode('&', str_replace('order=', '', $new_instance['order']));
-                
+
                 foreach($order as $i) {
                     if(isset($new_instance['tabs'][intval($i)])) {
                         $tabs[] = $new_instance['tabs'][intval($i)];
@@ -194,29 +194,29 @@ class OLT_Tabbed_Section_Widget extends WP_Widget {
                     }
                 }
             }
-            
+
             $tabs = array_merge($tabs, $new_instance['tabs']);
-            
+
             foreach($tabs as $tab){
                 $title = strip_tags($tab['title']);
                 if ( current_user_can('unfiltered_html') )
                     $body =  $tab['body'];
                 else
                     $body = wp_filter_post_kses( $tab['body'] );
-                
+
                 $instance['tabs'][] = array(
                     'title' => $title,
                     'body' => $body
                 );
             }
         }
-        
+
         // Processing tabs below
         return $instance;
     }
     /**
      * form function.
-     * 
+     *
      * @access public
      * @param mixed $instance
      * @return void
@@ -234,26 +234,26 @@ class OLT_Tabbed_Section_Widget extends WP_Widget {
                 'tags' => array()
             )
         ));
-        
+
         // Make sure second level options are actually arrays
         foreach($instance['tabs'] as $i => $v)
             if(!is_array($v))
                 $instance['tabs'][$i] = array();
-        
+
         foreach($instance['section_conditions'] as $i => $v)
             if(!is_array($v))
                 $instance['section_conditions'][$i] = array();
-        
-                
+
+
         $title = strip_tags($instance['title']);
         $display_title = (bool) $instance['display-title'];
         $special_pages = $instance['section_conditions']['special-pages'];
         $pages = $instance['section_conditions']['pages'];
         $categories = $instance['section_conditions']['categories'];
         $tags = $instance['section_conditions']['tags'];
-                
+
         $tabs = is_array($instance['tabs'])? $instance['tabs'] : array();
-        
+
         foreach($tabs as $i => $tab) {
             $tabs[$i]['title'] = strip_tags($tab['title']);
             $tabs[$i]['body'] = format_to_edit($tab['body']);
@@ -265,7 +265,7 @@ class OLT_Tabbed_Section_Widget extends WP_Widget {
             <input id="<?php echo $this->get_field_id('display-title'); ?>" name="<?php echo $this->get_field_name('display-title'); ?>" type="checkbox" <?php checked($display_title); ?> />
             <label for="<?php echo $this->get_field_id('display-title'); ?>"><?php _e('Display title','section-widget'); ?></label>
         </p>
-<?php   
+<?php
         olt_checklist_pane(array(
             'id' => $this->get_field_id('section_conditions'),
             'name' => $this->get_field_name('section_conditions'),
@@ -324,7 +324,7 @@ class OLT_Tabbed_Section_Widget extends WP_Widget {
 }
 /**
  * tabbed_section_widget_init function.
- * 
+ *
  * @access public
  * @return void
  */
@@ -333,53 +333,53 @@ function tabbed_section_widget_init() {
 }
 /**
  * tabbed_section_widget_load_scripts function.
- * 
+ *
  * @access public
  * @return void
  */
 function tabbed_section_widget_load_scripts() {
-    
+
     extract(wp_parse_args((array) get_option('section-widget-settings'), array(
         'theme' => 'redmond',
         'scope' => '.swt-outter',
         'heightfix' => false
     )));
-    
+
     $suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
-    	
+
     if(is_admin() ):
     	global $pagenow;
-    	
+
     	if( $pagenow == 'widgets.php' ):
-    	
+
         	if($theme == 'none') $theme = 'base';
-        	
+
         	wp_enqueue_style( 'section-widget-admin', plugins_url('section-widget/js/section-widget-admin'. $suffix.'.css') );
         	wp_enqueue_style( "section-widget-theme-{$theme}", plugins_url("section-widget/themes/theme-loader.php?theme={$theme}&scope=.olt-swt-designer"));
         	wp_enqueue_script('section-widget-admin', plugins_url('section-widget/js/section-widget-tabs'. $suffix.'.js'), array('jquery','jquery-ui-tabs','jquery-ui-sortable'));
-        	
+
         elseif( $pagenow == 'themes.php' && $_GET['page'] == 'section-widget' ):
         	wp_enqueue_script('section-widget-admin', plugins_url('section-widget/js/section-widget-admin'. $suffix.'.js'), array('jquery','jquery-ui-tabs','jquery-ui-sortable'));
-        
+
         endif;
    else:
 	        // Only load script and css if there is at least one active tabbed widget
-	        if( is_active_widget( false, false, 'section-tabbed' ) ):   
+	        if( is_active_widget( false, false, 'section-tabbed' ) ):
 	            if($theme != 'none'):
-	                wp_enqueue_style("section-widget-theme-{$theme}", 
+	                wp_enqueue_style("section-widget-theme-{$theme}",
 	                plugins_url("section-widget/themes/theme-loader.php?theme={$theme}&scope=").urlencode($scope));
 	      		endif;
-	      	
+
 	      	$current_tabs_theme_support = false;
 	      	if( is_array( get_theme_support('tabs') ) )
 	        	$current_tabs_theme_support = reset( get_theme_support('tabs') );
-         
+
 	         if ( $current_tabs_theme_support != 'twitter-bootstrap' ):
-	         	wp_enqueue_script('section-widget', 
+	         	wp_enqueue_script('section-widget',
 	           		plugins_url('section-widget/js/section-widget'. $suffix.'.js'), array('jquery','jquery-ui-tabs') );
-	           
+
 	         endif;   // uses_twitter_bootstrap ?
-           
+
     	endif;
     endif; // is_admin
 }
@@ -395,6 +395,6 @@ function print_script() {
 	jQuery(function () { jQuery('.section-widget-tabbed .nav-tabs a, widget-inside .nav-tabs a').click(function (e) { e.preventDefault();
 	jQuery(this).tab('show'); }) });
 
-<?php 
+<?php
 	echo '</script>';
 }
