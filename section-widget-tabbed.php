@@ -27,7 +27,7 @@ class OLT_Tabbed_Section_Widget extends WP_Widget {
     function __construct() {
         $widget_ops = array('classname' => 'section-widget-tabbed', 'description' => __('Display section-specific content in tabs.'));
         $control_ops = array('width' => 400);
-        $this->WP_Widget('section-tabbed', __('Section (Tabbed)'), $widget_ops, $control_ops);
+        parent::__construct('section-tabbed', __('Section (Tabbed)'), $widget_ops, $control_ops);
 
 
     }
@@ -108,7 +108,7 @@ class OLT_Tabbed_Section_Widget extends WP_Widget {
 	        $html = "<ul{$heightFixClass}>".$list.'</ul>'.$content;
 
             }
-
+			$before_widget = str_replace( 'class="', 'class="section-widget-tabbed ', $before_widget );
             echo $before_widget;
 
             if($instance['display-title']){
