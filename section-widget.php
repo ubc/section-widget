@@ -151,7 +151,7 @@ class OLT_Section_Widget extends WP_Widget {
 	function form( $instance ) {
 
 		// For backwards compatibility:
-		if(!is_array($instance['section_conditions']) && is_array($instance['conditions'])) {
+		if( isset( $instance['section_conditions'] ) && ! is_array( $instance['section_conditions'] ) && isset( $instance['conditions'] ) && is_array( $instance['conditions'] ) ) {
 			$instance['section_conditions'] = $instance['conditions'];
 		}
 		if(is_array($instance) && isset($instance['section_conditions']) && !is_array($instance['section_conditions'])) {
