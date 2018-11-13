@@ -1,18 +1,6 @@
 <?php
 
 $olt_checklist_version  = '1.1.4';                     // Version number of this copy
-// $olt_checklist_callback = create_function('$base_url', // Version specific init callback
-// 	'include_once("'.addslashes(dirname(__FILE__)).'/olt-checklist.php");'. // addslashes to please the Windows god...
-// 	'if(is_admin()) {'.
-// 	'global $pagenow;'.
-// 	'if($pagenow == "widgets.php"):'.
-// 	'$js_url  = $base_url . "/olt-checklist.js";'.
-// 	'$css_url = $base_url . "/olt-checklist.css";'.
-// 	'  wp_enqueue_script("olt-checklist",$js_url,array("jquery","jquery-ui-tabs"));'.
-// 	'  wp_enqueue_style("olt-checklist",$css_url);'.
-// 	'endif;'.
-// 	'}'
-// );
 
 $olt_checklist_callback = function( $base_url ) {
 
@@ -78,10 +66,11 @@ if(!function_exists('load_olt_checklist')){
 				$base_url = $olt_checklist[$i][2];
 			}
 		}
-		if ( ! function_exists( $callback ) ) {
+		if ( ! is_callable( $callback ) ) {
 			return;
 		}
-		$callback($base_url);
+
+		$callback( $base_url );
 	}
 
 }
