@@ -358,7 +358,7 @@ function tabbed_section_widget_load_scripts() {
         	wp_enqueue_style( "section-widget-theme-{$theme}", plugins_url("section-widget/themes/theme-loader.php?theme={$theme}&scope=.olt-swt-designer"));
         	wp_enqueue_script('section-widget-admin', plugins_url('section-widget/js/section-widget-tabs'. $suffix.'.js'), array('jquery','jquery-ui-tabs','jquery-ui-sortable'));
 
-        elseif( $pagenow == 'themes.php' && $_GET['page'] == 'section-widget' ):
+        elseif( $pagenow == 'themes.php' && isset( $_GET['page'] ) && $_GET['page'] == 'section-widget' ):
         	wp_enqueue_script('section-widget-admin', plugins_url('section-widget/js/section-widget-admin'. $suffix.'.js'), array('jquery','jquery-ui-tabs','jquery-ui-sortable'));
 
         endif;
