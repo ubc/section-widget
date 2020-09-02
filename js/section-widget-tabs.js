@@ -47,7 +47,7 @@
 				var tab = $(e);
 				
 				if(typeof(tab.data('inc')) == 'undefined') {
-	            	var inc = tab.size();
+	            	var inc = tab.length;
 	            	var counter = tab.find(".olt-swt-designer-tab").length;
 
 	            	tab.data('inc',counter);

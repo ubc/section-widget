@@ -5,7 +5,7 @@ Plugin Name: Section Widget
 Plugin URI: http://blogs.ubc.ca/support/plugins/section-widget/
 Description: Display arbitrary text or HTML on certain sections of your site.
 Author: Godfrey Chan (UBC CTLT), Enej,
-Version: 3.2.7
+Version: 3.3.0
 Author URI: http://www.chancancode.com/
 */
 
