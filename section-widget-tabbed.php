@@ -384,10 +384,34 @@ function tabbed_section_widget_load_scripts() {
     endif; // is_admin
 }
 
+function enqueue_assets_for_widget_page() {
+    $current_screen = get_current_screen();
+
+    if( $current_screen->id !== "widgets" ) {
+        return;
+    }
+
+    if ( version_compare( $GLOBALS['wp_version'], '5.8', '<' ) ) {
+        return;
+    }
+
+    if( function_exists('is_plugin_active_for_network') && is_plugin_active_for_network('classic-widgets/classic-widgets.php') ) {
+        return;
+    }
+
+    if( function_exists('is_plugin_active') && is_plugin_active('classic-widgets/classic-widgets.php') ) {
+        return;
+    }
+
+    wp_enqueue_script('section-widget-admin-gutenberg', plugins_url('section-widget/js/section-widget-tabs-gutenberg.js'), array('jquery','jquery-ui-tabs','jquery-ui-sortable'), '3.3.0');
+}
+
 ### Function: Init Section Widget
 add_action('widgets_init', 'tabbed_section_widget_init');
 add_action('init', 'tabbed_section_widget_load_scripts');
 add_action('wp_footer', 'print_script');
+add_action( 'current_screen', 'enqueue_assets_for_widget_page' );
+
 
 function print_script() {
 	echo '<script type="text/javascript">';
