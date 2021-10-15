@@ -385,9 +385,9 @@ function tabbed_section_widget_load_scripts() {
 }
 
 function enqueue_assets_for_widget_page() {
-    $currentScreen = get_current_screen();
+    $current_screen = get_current_screen();
 
-    if( $currentScreen->id !== "widgets" ) {
+    if( $current_screen->id !== "widgets" ) {
         return;
     }
 
@@ -395,7 +395,11 @@ function enqueue_assets_for_widget_page() {
         return;
     }
 
-    if( is_plugin_active_for_network('classic-widgets/classic-widgets.php') || is_plugin_active( 'classic-widgets/classic-widgets.php' ) ) {
+    if( function_exists('is_plugin_active_for_network') && is_plugin_active_for_network('classic-widgets/classic-widgets.php') ) {
+        return;
+    }
+
+    if( function_exists('is_plugin_active') && is_plugin_active('classic-widgets/classic-widgets.php') ) {
         return;
     }
 
