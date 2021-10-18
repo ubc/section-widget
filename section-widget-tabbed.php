@@ -356,10 +356,10 @@ function tabbed_section_widget_load_scripts() {
 
         	wp_enqueue_style( 'section-widget-admin', plugins_url('section-widget/js/section-widget-admin'. $suffix.'.css') );
         	wp_enqueue_style( "section-widget-theme-{$theme}", plugins_url("section-widget/themes/theme-loader.php?theme={$theme}&scope=.olt-swt-designer"));
-        	wp_enqueue_script('section-widget-admin', plugins_url('section-widget/js/section-widget-tabs'. $suffix.'.js'), array('jquery','jquery-ui-tabs','jquery-ui-sortable'), '3.3.0');
+        	wp_enqueue_script('section-widget-admin', plugins_url('section-widget/js/section-widget-tabs'. $suffix.'.js'), array('jquery','jquery-ui-tabs','jquery-ui-sortable'), '3.3.1');
 
         elseif( $pagenow == 'themes.php' && isset( $_GET['page'] ) && $_GET['page'] == 'section-widget' ):
-        	wp_enqueue_script('section-widget-admin', plugins_url('section-widget/js/section-widget-admin'. $suffix.'.js'), array('jquery','jquery-ui-tabs','jquery-ui-sortable'));
+        	wp_enqueue_script('section-widget-admin', plugins_url('section-widget/js/section-widget-admin'. $suffix.'.js'), array('jquery','jquery-ui-tabs','jquery-ui-sortable'), '3.3.1');
 
         endif;
    else:
@@ -376,7 +376,7 @@ function tabbed_section_widget_load_scripts() {
 
 	         if ( $current_tabs_theme_support != 'twitter-bootstrap' ):
 	         	wp_enqueue_script('section-widget',
-	           		plugins_url('section-widget/js/section-widget'. $suffix.'.js'), array('jquery','jquery-ui-tabs') );
+	           		plugins_url('section-widget/js/section-widget'. $suffix.'.js'), array('jquery','jquery-ui-tabs'), '3.3.1' );
 
 	         endif;   // uses_twitter_bootstrap ?
 
@@ -403,7 +403,7 @@ function enqueue_assets_for_widget_page() {
         return;
     }
 
-    wp_enqueue_script('section-widget-admin-gutenberg', plugins_url('section-widget/js/section-widget-tabs-gutenberg.js'), array('jquery','jquery-ui-tabs','jquery-ui-sortable'), '3.3.0');
+    wp_enqueue_script('section-widget-admin-gutenberg', plugins_url('section-widget/js/section-widget-tabs-gutenberg.js'), array('jquery','jquery-ui-tabs','jquery-ui-sortable'), '3.3.1');
 }
 
 ### Function: Init Section Widget
