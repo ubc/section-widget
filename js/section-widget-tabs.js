@@ -19,14 +19,14 @@
 		tabs: false,
 		init:function(){
 			
-			
-			$('#widgets-right')
-			// add tabs
-			.delegate('.olt-swt-designer-add-tab a','click','', Section_Widget_Tabs.add_tab )
-			// delete tabs
-			.delegate('.olt-swt-designer-delete-tab a','click','', Section_Widget_Tabs.delete_tab )
-			// update tab title
-			.delegate('.olt-swt-designer-tab-title','focusout','', Section_Widget_Tabs.update_tab_title );
+			// Add tabs
+			$(document).on('click', '.olt-swt-designer-add-tab a', Section_Widget_Tabs.add_tab);
+
+			// Delete tabs
+			$(document).on('click', '.olt-swt-designer-delete-tab a', Section_Widget_Tabs.delete_tab);
+
+			// Update tab title
+			$(document).on('focusout', '.olt-swt-designer-tab-title', Section_Widget_Tabs.update_tab_title);
 			
 			Section_Widget_Tabs.create_tabs();
 			
@@ -107,7 +107,7 @@
 	    		var tabs = shell.parents('.olt-swt-designer-wrapper');
 	    		shell.remove();
 	    		list_shell.remove();
-	    		tabs.tabs("refresh");
+	    		tabs.tabs();
 	    	}
 			e.preventDefault();
 		},
