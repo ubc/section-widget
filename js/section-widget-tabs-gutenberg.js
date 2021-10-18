@@ -10,7 +10,13 @@
         const callback = function(mutationsList, observer) {
             // Use traditional 'for loops' for IE 11
             for(const mutation of mutationsList) {
-                if (mutation.type === 'childList' && mutation.target.classList.contains('wp-block-legacy-widget') ) {
+                // For section widget that is newly added to current widget screen.
+                if( mutation.target.classList.contains('widget-content')){
+                    jQuery(mutation.target).find('.olt-checklist-wrapper').tabs();
+                }
+
+                // For section widget that is already added previously.
+                if (mutation.type === 'childList' && ( mutation.target.classList.contains('wp-block-legacy-widget') || mutation.target.classList.contains('wp-block-legacy-widget__edit-form') ) ) {
                     jQuery(mutation.target).find('.olt-checklist-wrapper').tabs();
                 }
             }
