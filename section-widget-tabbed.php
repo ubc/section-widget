@@ -50,7 +50,7 @@ class OLT_Tabbed_Section_Widget extends WP_Widget {
         )));
 
         if(isset($_GET['swt-scope-test'])) {
-            echo $before_widget . '<div class="swt-wrapper">Section Widget Scope Test</div>' . $after_widget;
+            echo wp_kses_post($before_widget) . '<div class="swt-wrapper">Section Widget Scope Test</div>' . wp_kses_post($after_widget);
             return;
         }
 
@@ -109,12 +109,12 @@ class OLT_Tabbed_Section_Widget extends WP_Widget {
 
             }
 			$before_widget = str_replace( 'class="', 'class="section-widget-tabbed ', $before_widget );
-            echo $before_widget;
+            echo wp_kses_post($before_widget);
 
             if($instance['display-title']){
-                echo $before_title;
-                echo apply_filters('widget_title', $instance['title']);
-                echo $after_title;
+                echo wp_kses_post($before_title);
+                echo esc_html( apply_filters('widget_title', $instance['title']) );
+                echo wp_kses_post($after_title);
             }
 
             if ( $current_tabs_theme_support == 'twitter-bootstrap' ) {
@@ -137,7 +137,7 @@ class OLT_Tabbed_Section_Widget extends WP_Widget {
             echo apply_filters('widget_text', $html);
             echo '</div></div>';
             }
-            echo $after_widget;
+            echo wp_kses_post($after_widget);
         }
     }
     /**
@@ -260,10 +260,10 @@ class OLT_Tabbed_Section_Widget extends WP_Widget {
         }
 ?>
         <p>
-            <label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:','section-widget'); ?></label>
-            <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr($title); ?>" />
-            <input id="<?php echo $this->get_field_id('display-title'); ?>" name="<?php echo $this->get_field_name('display-title'); ?>" type="checkbox" <?php checked($display_title); ?> />
-            <label for="<?php echo $this->get_field_id('display-title'); ?>"><?php _e('Display title','section-widget'); ?></label>
+            <label for="<?php echo esc_attr( $this->get_field_id('title') ); ?>"><?php esc_html_e('Title:','section-widget'); ?></label>
+            <input class="widefat" id="<?php echo esc_attr( $this->get_field_id('title') ); ?>" name="<?php echo esc_attr( $this->get_field_name('title') ); ?>" type="text" value="<?php echo esc_attr($title); ?>" />
+            <input id="<?php echo esc_attr( $this->get_field_id('display-title') ); ?>" name="<?php echo esc_attr( $this->get_field_name('display-title') ); ?>" type="checkbox" <?php checked($display_title); ?> />
+            <label for="<?php echo esc_attr( $this->get_field_id('display-title') ); ?>"><?php esc_html_e('Display title','section-widget'); ?></label>
         </p>
 <?php
         olt_checklist_pane(array(
@@ -276,36 +276,36 @@ class OLT_Tabbed_Section_Widget extends WP_Widget {
         ));
 ?>
         <div class="olt-swt-designer">
-            <input type="hidden" name="idprefix" value="<?php echo $this->get_field_id('tab') ?>" />
-            <input type="hidden" name="nameprefix" value="<?php echo $this->get_field_name('tabs') ?>" />
-            <input type="hidden" name="<?php echo $this->get_field_name('order') ?>" class="olt-swt-order" />
-            <div class="olt-swt-designer-wrapper" id="<?php echo $this->get_field_id('designer-wrapper') ?>">
-                <div  id="<?php echo $this->get_field_id('designer-main') ?>" class="olt-swt-designer-main">
+            <input type="hidden" name="idprefix" value="<?php echo esc_attr( $this->get_field_id('tab') ); ?>" />
+            <input type="hidden" name="nameprefix" value="<?php echo esc_attr( $this->get_field_name('tabs') ); ?>" />
+            <input type="hidden" name="<?php echo esc_attr( $this->get_field_name('order') ); ?>" class="olt-swt-order" />
+            <div class="olt-swt-designer-wrapper" id="<?php echo esc_attr( $this->get_field_id('designer-wrapper') ); ?>">
+                <div  id="<?php echo esc_attr( $this->get_field_id('designer-main') ); ?>" class="olt-swt-designer-main">
                     <ul>
                         <?php foreach($tabs as $id => $tab): ?>
-                        <li class="olt-swt-designer-tab" id="<?php echo $this->get_field_id('tab-'.$id); ?>-list">
-                            <a href="#<?php echo $this->get_field_id('tab-'.$id); ?>" id="<?php echo $this->get_field_id('tab-'.$id.'-title-link'); ?>">
+                        <li class="olt-swt-designer-tab" id="<?php echo esc_attr( $this->get_field_id('tab-'.$id) ); ?>-list">
+                            <a href="#<?php echo esc_attr( $this->get_field_id('tab-'.$id) ); ?>" id="<?php echo esc_attr( $this->get_field_id('tab-'.$id.'-title-link') ); ?>">
                                 <?php echo esc_html($tab['title']); ?>
                             </a>
                         </li>
                         <?php endforeach; ?>
                         <li class="olt-swt-designer-tabs-controls olt-swt-designer-add-tab">
-                            <a><span class="ui-icon ui-icon-plusthick" style="float:left;margin-right:.3em;margin-top: -1px;"></span><?php _e('Add a new tab','section-widget'); ?></a>
+                            <a><span class="ui-icon ui-icon-plusthick" style="float:left;margin-right:.3em;margin-top: -1px;"></span><?php esc_html_e('Add a new tab','section-widget'); ?></a>
                         </li>
                     </ul>
                     <?php foreach($tabs as $id => $tab): ?>
-                    <div id="<?php echo $this->get_field_id('tab-'.$id) ?>" class="olt-swt-designer-panel">
+                    <div id="<?php echo esc_attr( $this->get_field_id('tab-'.$id) ); ?>" class="olt-swt-designer-panel">
                         <div class="olt-swt-designer-top">
-                            <label for="<?php echo $this->get_field_id('tab-'.$id.'-title'); ?>"><?php _e('Title:','section-widget'); ?></label>
-                            <input id="<?php echo $this->get_field_id('tab-'.$id.'-title'); ?>" class="olt-swt-designer-tab-title" name="<?php echo $this->get_field_name('tabs')."[$id][title]"; ?>" type="text" value="<?php echo esc_attr($tab['title']); ?>" />
+                            <label for="<?php echo esc_attr( $this->get_field_id('tab-'.$id.'-title') ); ?>"><?php esc_html_e('Title:','section-widget'); ?></label>
+                            <input id="<?php echo esc_attr( $this->get_field_id('tab-'.$id.'-title') ); ?>" class="olt-swt-designer-tab-title" name="<?php echo esc_attr( $this->get_field_name('tabs') )."[".esc_attr($id)."][title]"; ?>" type="text" value="<?php echo esc_attr($tab['title']); ?>" />
                             <p class="olt-swt-designer-tabs-controls olt-swt-designer-delete-tab">
-                                <a href="#" id="<?php echo $this->get_field_id('tab-'.$id) ?>-delete"><span class="ui-icon ui-icon-trash" style="float:left;margin-right:.3em;margin-top: -2px;"></span><?php _e('Delete this tab','section-widget');?></a>
+                                <a href="#" id="<?php echo esc_attr( $this->get_field_id('tab-'.$id) ); ?>-delete"><span class="ui-icon ui-icon-trash" style="float:left;margin-right:.3em;margin-top: -2px;"></span><?php esc_html_e('Delete this tab','section-widget');?></a>
                             </p>
                         </div>
                         <div class="olt-sw-body">
                             <p class="olt-sw-body-help">
-                                <?php _e('<strong>Formatting Help:</strong> You may use HTML in this widget, and it is probably a good idea to wrap the content in your own <code>&lt;div&gt;</code> to aid styling. Shortcodes are also allowed, but please beware not all of them will function properly on archive pages.','section-widget');?></p>
-                            <textarea rows="16" cols="20" name="<?php echo $this->get_field_name('tabs')."[$id][body]"; ?>"><?php echo esc_html($tab['body']); ?></textarea>
+                                <?php esc_html_e('<strong>Formatting Help:</strong> You may use HTML in this widget, and it is probably a good idea to wrap the content in your own <code>&lt;div&gt;</code> to aid styling. Shortcodes are also allowed, but please beware not all of them will function properly on archive pages.','section-widget');?></p>
+                            <textarea rows="16" cols="20" name="<?php echo esc_attr( $this->get_field_name('tabs') )."[".esc_attr($id)."][body]"; ?>"><?php echo esc_html($tab['body']); ?></textarea>
                         </div>
                     </div>
                     <?php endforeach; ?>
@@ -313,11 +313,11 @@ class OLT_Tabbed_Section_Widget extends WP_Widget {
             </div>
         </div>
         <script type="text/javascript">
-        	//console.log('<?php echo $this->get_field_id('designer-main'); ?>', '<?php echo $this->get_field_id('conditions-wrapper'); ?>');
+        	//console.log('<?php echo esc_attr( $this->get_field_id('designer-main') ); ?>', '<?php echo esc_attr( $this->get_field_id('conditions-wrapper') ); ?>');
             if(typeof OLTChecklistPaneInit == 'function')
-                OLTChecklistPaneInit(jQuery('#<?php echo $this->get_field_id('conditions-wrapper'); ?>'));
+                OLTChecklistPaneInit(jQuery('#<?php echo esc_attr( $this->get_field_id('conditions-wrapper') ); ?>'));
             if(typeof OLTSWTInit == 'function')
-                OLTSWTInit(jQuery('#<?php echo $this->get_field_id('designer-wrapper') ?>'));
+                OLTSWTInit(jQuery('#<?php echo esc_attr( $this->get_field_id('designer-wrapper') ); ?>'));
         </script>
 <?php
     }

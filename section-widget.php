@@ -9,6 +9,8 @@ Version: 3.3.0
 Author URI: http://www.chancancode.com/
 */
 
+define( 'SECTION_WIDGET_DIR_PATH', plugin_dir_path( __FILE__ ) );
+
 include_once('olt-checklist/loader.php');
 enqueue_olt_checklist_loader(plugins_url('section-widget/olt-checklist'));
 
@@ -74,16 +76,16 @@ class OLT_Section_Widget extends WP_Widget {
 
 		// olt_checklist_conditions_check is the replacement for $should_display
 		if(olt_checklist_conditions_check($instance['section_conditions'])) {
-			echo $before_widget;
+			echo wp_kses_post($before_widget);
 
 			if($instance['display-title']){
-				echo $before_title;
-				echo apply_filters('widget_title', $instance['title']);
-				echo $after_title;
+				echo wp_kses_post($before_title);
+				echo esc_html( apply_filters('widget_title', $instance['title']) );
+				echo wp_kses_post($after_title);
 			}
 
 			echo apply_filters('widget_text', do_shortcode($instance['body']));
-			echo $after_widget;
+			echo wp_kses_post($after_widget);
 		}
 	}
 	/**
@@ -190,10 +192,10 @@ class OLT_Section_Widget extends WP_Widget {
 		$body = format_to_edit($instance['body']);
 ?>
 		<p>
-			<label for="<?php echo esc_attr($this->get_field_id('title')); ?>"><?php _e('Title:','section-widget'); ?></label>
+			<label for="<?php echo esc_attr($this->get_field_id('title')); ?>"><?php esc_html_e('Title:','section-widget'); ?></label>
 			<input class="widefat" id="<?php echo esc_attr($this->get_field_id('title')); ?>" name="<?php echo esc_attr($this->get_field_name('title') ); ?>" type="text" value="<?php echo esc_attr($title); ?>" />
-			<input id="<?php echo $this->get_field_id('display-title'); ?>" name="<?php echo $this->get_field_name('display-title'); ?>" type="checkbox" <?php checked($display_title);  ?> />
-			<label for="<?php echo esc_attr($this->get_field_id('display-title')); ?>"><?php _e('Display title','section-widget'); ?></label>
+			<input id="<?php echo esc_attr($this->get_field_id('display-title')); ?>" name="<?php echo esc_attr($this->get_field_name('display-title')); ?>" type="checkbox" <?php checked($display_title);  ?> />
+			<label for="<?php echo esc_attr($this->get_field_id('display-title')); ?>"><?php esc_html_e('Display title','section-widget'); ?></label>
 		</p>
 <?php
 		olt_checklist_pane(array(
@@ -207,13 +209,13 @@ class OLT_Section_Widget extends WP_Widget {
 ?>
 		<div class="olt-sw-body">
 			<p class="olt-sw-body-help">
-				<?php _e('<strong>Formatting Help:</strong> You may use HTML in this widget, and it is probably a good idea to wrap the content in your own <code>&lt;div&gt;</code> to aid styling. Shortcodes are also allowed, but please beware not all of them will function properly on archive pages.','section-widget'); ?>
+				<?php esc_html_e('<strong>Formatting Help:</strong> You may use HTML in this widget, and it is probably a good idea to wrap the content in your own <code>&lt;div&gt;</code> to aid styling. Shortcodes are also allowed, but please beware not all of them will function properly on archive pages.','section-widget'); ?>
 			</p>
-			<textarea rows="16" cols="20" id="<?php echo esc_attr($this->get_field_id('body')); ?>" name="<?php echo esc_attr($this->get_field_name('body')); ?>"><?php echo $body; ?></textarea>
+			<textarea rows="16" cols="20" id="<?php echo esc_attr($this->get_field_id('body')); ?>" name="<?php echo esc_attr($this->get_field_name('body')); ?>"><?php echo wp_kses_post($body); ?></textarea>
 		</div>
 		<script type="text/javascript">
 			if(typeof OLTChecklistPaneInit == 'function')
-				OLTChecklistPaneInit(jQuery('#<?php echo $this->get_field_id('section_conditions-wrapper'); ?>'));
+				OLTChecklistPaneInit(jQuery('#<?php echo esc_attr($this->get_field_id('section_conditions-wrapper')); ?>'));
 		</script>
 <?php
 	}

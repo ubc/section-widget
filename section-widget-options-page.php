@@ -102,40 +102,40 @@ function tabbed_section_widget_option_page() {
     $links_text = implode(',', $clean_links);
 ?>
 <script type="text/javascript">
-    var stylesheet_url = '<?php echo plugins_url("section-widget/themes/theme-loader.php"); ?>';
-    var links = [<?php echo $links_text; ?>];
+    var stylesheet_url = '<?php echo esc_url( plugins_url("section-widget/themes/theme-loader.php") ); ?>';
+    var links = [<?php echo esc_html( $links_text ); ?>];
 </script>
 
 <div class="wrap">
-    <h2><?php _e('Section Widget Settings','section-widget'); ?></h2>
+    <h2><?php esc_html_e('Section Widget Settings','section-widget'); ?></h2>
     <?php if($updated): ?>
-    <div class="updated"><p><strong><?php _e('Settings updated.','section-widget'); ?></strong></p></div>
+    <div class="updated"><p><strong><?php esc_html_e('Settings updated.','section-widget'); ?></strong></p></div>
     <?php endif; ?>
     <form method="post">
-        <h3><?php _e('Tabbed Section Widget','section-widget'); ?></h3>
+        <h3><?php esc_html_e('Tabbed Section Widget','section-widget'); ?></h3>
         <p>
-            <?php _e('Section Widget ships with 25 default <a href="http://jqueryui.com/" target="_blank">jQuery UI</a> themes. You can specify a CSS selector which will be prepended to all CSS rules provided by the theme. Click on the help link below if you are not sure what to do.','section-widget'); ?>
+            <?php esc_html_e('Section Widget ships with 25 default <a href="http://jqueryui.com/" target="_blank">jQuery UI</a> themes. You can specify a CSS selector which will be prepended to all CSS rules provided by the theme. Click on the help link below if you are not sure what to do.','section-widget'); ?>
         </p>
         <p>
-            <?php _e('You may also roll your own theme by selecteing <strong>Bring My Own Stylesheet</strong> in theme menu. If you choose to do this, no extra stylesheet will be loaded and the CSS Scope option will be <strong>ignored</strong>. In this case the <strong>Base</strong> theme will be used in the widget designer. Refer to the <a href="http://jqueryui.com/docs/Theming" target="_blank">theming guide</a> for more information.','section-widget'); ?>
+            <?php esc_html_e('You may also roll your own theme by selecteing <strong>Bring My Own Stylesheet</strong> in theme menu. If you choose to do this, no extra stylesheet will be loaded and the CSS Scope option will be <strong>ignored</strong>. In this case the <strong>Base</strong> theme will be used in the widget designer. Refer to the <a href="http://jqueryui.com/docs/Theming" target="_blank">theming guide</a> for more information.','section-widget'); ?>
         </p>
         <table class="form-table">
             <tr valign="top">
                 <th scope="row">
-                    <label for="swt-theme"><?php _e('Theme','section-widget'); ?></label>
+                    <label for="swt-theme"><?php esc_html_e('Theme','section-widget'); ?></label>
                 </th>
                 <td>
                     <select name="swt_theme" id="swt-theme">
                         <option value="none" <?php if($theme == 'none') echo 'selected="selected"'; ?>>
-                            <?php _e('Bring My Own Stylesheet','section-widget'); ?>
+                            <?php esc_html_e('Bring My Own Stylesheet','section-widget'); ?>
                         </option>
                         <?php foreach($themes as $t): ?>
-                        <option value="<?php echo $t; ?>" <?php if($theme == $t) echo 'selected="selected"'; ?>>
-                            <?php echo theme_display_name($t); ?>
+                        <option value="<?php echo esc_attr($t); ?>" <?php if($theme == $t) echo 'selected="selected"'; ?>>
+                            <?php echo esc_html(theme_display_name($t)); ?>
                         </option>
                         <?php endforeach; ?>
                     </select>
-                    <span class="description">(<a id="swt-theme-preview-link" href="#"><?php _e('Preview','section-widget'); ?></a>)</span>
+                    <span class="description">(<a id="swt-theme-preview-link" href="#"><?php esc_html_e('Preview','section-widget'); ?></a>)</span>
                     <div id="swt-theme-preview" style="display:none">
                         <div id="swt-theme-preview-wrapper">
                             <ul>
@@ -154,52 +154,52 @@ function tabbed_section_widget_option_page() {
                             </div>
                         </div>
                         <p>
-                            <a id="swt-theme-preview-hide-link" href="#"><?php _e('Hide preview','section-widget'); ?></a>
+                            <a id="swt-theme-preview-hide-link" href="#"><?php esc_html_e('Hide preview','section-widget'); ?></a>
                         </p>
                     </div>
                 </td>
             </tr>
             <tr valign="top">
                 <th scope="row">
-                    <label for="swt-scope"><?php _e('CSS Scope','section-widget'); ?></label>
+                    <label for="swt-scope"><?php esc_html_e('CSS Scope','section-widget'); ?></label>
                 </th>
                 <td>
-                    <input name="swt_scope" type="text" id="swt-scope" value="<?php echo $scope ?>" class="regular-text code" />
-                    <span class="description"><?php _e('Enter a CSS selector to limit the theme\'s scope (<a id="swt-scope-help-link" href="#">Help is here</a>)','section-widget'); ?></span>
+                    <input name="swt_scope" type="text" id="swt-scope" value="<?php echo esc_attr($scope) ?>" class="regular-text code" />
+                    <span class="description"><?php esc_html_e('Enter a CSS selector to limit the theme\'s scope (<a id="swt-scope-help-link" href="#">Help is here</a>)','section-widget'); ?></span>
                     <div id="swt-scope-help" style="display:none">
                         <p>
-                            <?php _e('This is to ensure the theme you have chosen here will not affect other areas of your site. Generally speaking, you would want to narrow down the scope as much as possible. This would help to override rules defined by your WordPress theme too.','section-widget'); ?>
+                            <?php esc_html_e('This is to ensure the theme you have chosen here will not affect other areas of your site. Generally speaking, you would want to narrow down the scope as much as possible. This would help to override rules defined by your WordPress theme too.','section-widget'); ?>
                         </p>
                         <p>
-                            <?php _e('If you have no idea what this is all about, we can detect the optimal settings for you. To do this, you would need to have <strong>at least two Tabbed Section Widget</strong> added to your sidebar. You can do that in the','section-widget') ?> <a href="<?php echo admin_url('widgets.php'); ?>"><?php _e('Widgets','section-widget'); ?></a> <?php _e('control panel. You may choose to leave out the content fields so that they would be invisible to your visitors.','section-widget'); ?>
+                            <?php esc_html_e('If you have no idea what this is all about, we can detect the optimal settings for you. To do this, you would need to have <strong>at least two Tabbed Section Widget</strong> added to your sidebar. You can do that in the','section-widget') ?> <a href="<?php echo esc_url(admin_url('widgets.php')); ?>"><?php esc_html_e('Widgets','section-widget'); ?></a> <?php esc_html_e('control panel. You may choose to leave out the content fields so that they would be invisible to your visitors.','section-widget'); ?>
                         </p>
                         <p>
-                            <?php _e('Once you\'ve done that, come back to this page and click the button below.','section-widget'); ?>
+                            <?php esc_html_e('Once you\'ve done that, come back to this page and click the button below.','section-widget'); ?>
                         </p>
                         <div>
                             <div id="swt-scope-detect-message" style="display:none"></div>
                             <input type="button" class="button button-highlighted" value="Detect Scope" id="swt-scope-detect" />
                         </div>
                         <p>
-                            <a id="swt-scope-help-hide-link" href="#"><?php _e('Hide this help message','section-widget'); ?></a>
+                            <a id="swt-scope-help-hide-link" href="#"><?php esc_html_e('Hide this help message','section-widget'); ?></a>
                         </p>
                     </div>
                 </td>
             </tr>
             <tr valign="top">
                 <th scope="row">
-                    <?php _e('Height Fix','section-widget'); ?>
+                    <?php esc_html_e('Height Fix','section-widget'); ?>
                 </th>
                 <td>
                     <label for="swt_heightfix">
-                        <input name="swt_heightfix" type="checkbox" id="swt_heightfix" value="true" class="regular-text code"<?php echo $heightFix ?> />
-                        <?php _e('Turn this on if the widget looks stretched out on your theme','section-widget'); ?>
+                        <input name="swt_heightfix" type="checkbox" id="swt_heightfix" value="true" class="regular-text code"<?php echo esc_attr($heightFix) ?> />
+                        <?php esc_html_e('Turn this on if the widget looks stretched out on your theme','section-widget'); ?>
                     </label>
                 </td>
             </tr>
         </table>
         <p class="submit">
-            <input type="submit" name="Submit" class="button-primary" value="<?php _e('Save Changes','section-widget'); ?>" />
+            <input type="submit" name="Submit" class="button-primary" value="<?php esc_html_e('Save Changes','section-widget'); ?>" />
         </p>
     </form>
 </div>

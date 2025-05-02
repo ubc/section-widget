@@ -122,7 +122,38 @@ if ( ! function_exists( 'olt_checklist' ) ) {
 		$output .= "</div>\n";
 
 		if ( $echo ) {
-			echo $output;
+			$allowed_html = array(
+				'div' => array(
+					'id' => true,
+					'class' => true,
+				),
+				'ul' => array(
+					'class' => true,
+					'id' => true,
+				),
+				'li' => array(),
+				'input' => array(
+					'type' => true,
+					'class' => true,
+					'id' => true,
+					'name' => true,
+					'value' => true,
+					'checked' => true,
+				),
+				'label' => array(
+					'for' => true,
+				),
+				'p' => array(
+					'class' => true,
+				),
+				'a' => array(
+					'href' => true,
+				),
+				'strong' => array(),
+				// add more as needed
+			);
+
+			echo wp_kses( $output, $allowed_html );
 		}
 
 		return $output;
@@ -330,7 +361,38 @@ if ( ! function_exists( 'olt_checklist' ) ) {
 		}
 
 		if ( $echo ) {
-			echo $output;
+			$allowed_html = array(
+				'div' => array(
+					'id' => true,
+					'class' => true,
+				),
+				'ul' => array(
+					'class' => true,
+					'id' => true,
+				),
+				'li' => array(),
+				'input' => array(
+					'type' => true,
+					'class' => true,
+					'id' => true,
+					'name' => true,
+					'value' => true,
+					'checked' => true,
+				),
+				'label' => array(
+					'for' => true,
+				),
+				'p' => array(
+					'class' => true,
+				),
+				'a' => array(
+					'href' => true,
+				),
+				'strong' => array(),
+				// add more as needed
+			);
+
+			echo wp_kses($output, $allowed_html);
 		}
 
 		return $output;
